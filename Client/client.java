@@ -1,5 +1,6 @@
 package Client;
 
+import Client.drone;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -37,9 +38,17 @@ public class client {
             }
         }
     }
+    public String registerDrone(Client.drone drone){    
+        Scanner sa = new Scanner(System.in);
+        String response = "Problem with Server Connection";
+        System.out.println("Enter Drone ID");
+        String droneID = sa.nextLine();
+        //todo: feed this to drone or make the drone.java file, the one that establishes the connection
+        return response;
+    }
 }
 
-//todo: registar drone
+//todo: register drone
 //todo: drone position update
 //todo: fire detection message
 //todo: achknowledge recall

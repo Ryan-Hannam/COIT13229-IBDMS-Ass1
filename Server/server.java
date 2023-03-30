@@ -34,18 +34,21 @@ class Connection extends Thread {
 			in = new ObjectInputStream( clientSocket.getInputStream());
 			out =new ObjectOutputStream( clientSocket.getOutputStream());
 			this.start();
-		} catch(IOException e) {System.out.println("Connection:"+e.getMessage());}
+		} catch(IOException e){
+            System.out.println("Connection:"+e.getMessage());
+        }
 	}
 
 	public void run(){
 		try {
             //read from .csv here??
+            //GUI here?
 		}
         catch (EOFException e){
             System.out.println("EOF:"+e.getMessage());
 		} 
-        catch(IOException e) {
-            System.out.println("readline:"+e.getMessage());
+        catch(IOException i) {
+            System.out.println("readline:"+i.getMessage());
 		} 
         catch(ClassNotFoundException ex){
 					 ex.printStackTrace();
@@ -54,7 +57,9 @@ class Connection extends Thread {
             try {
                 clientSocket.close();
             }
-            catch (IOException e)
+            catch (IOException j){
+                System.out.println("readline: "+j.getMessage());
+            }
         }
 	}
 }
