@@ -38,6 +38,7 @@ public class client {
             }
         }
     }
+
     public String registerDrone(Client.drone drone){    
         Scanner sa = new Scanner(System.in);
         String response = "Problem with Server Connection";
@@ -45,6 +46,23 @@ public class client {
         String droneID = sa.nextLine();
         //todo: feed this to drone or make the drone.java file, the one that establishes the connection
         return response;
+    }
+
+    public void dronePosUpdate(){
+        //private drone xPOS = drone.getDroneXPos();
+        //private drone yPOS = drone.getDroneYPos();
+        //send drone XPos,YPos to server
+    }
+
+    public void fireDetection(){
+        System.out.println("Fire detected, sending to server");
+        //send fireID,posX,posY to server
+    }
+
+    public void acknowldegeRecall(){
+        //if condition to check for received message?
+        System.out.println("Drone RTB");
+        System.exit(0);
     }
 }
 

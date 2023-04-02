@@ -1,5 +1,7 @@
 package Server;
 
+import java.awt.*;
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.security.*;
@@ -74,9 +76,46 @@ class Connection extends Thread {
 
 //admin
 //todo: delete fire
+// private void deleteFire(){
+//    delete fire from .csv?
+// }
+
 //todo: recall all
+// private void recallAll(){
+//     foreach?
+//     sendrecall()
+// }
+
 //todo: move drone
+// private voice moveDrone(){
+//     setDroneXPos
+//     setDroneYPos
+//     sendtoDrone
+// }
+
 //todo: shut down server 
+// private void shutdown(){
+//     recallAll();
+//     System.exit(0);
+// }
 
 //gui
 //todo: GUI
+private void UI(){
+    JFrame frame = new JFrame("IBDMS");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //todo: replace this with Recall message
+    frame.setLayout(new BorderLayout());
+    frame.add(new newPane());
+}
+
+public class newPane extends JPanel{
+    public newPane(){
+        //todo: construct internal layout
+        //needs
+            //"Action Pane" left side with buttons
+            //functional buttons to left top
+            //messages to left bottom
+            //"Map Pane" remainder screen space
+        System.out.println("Under construction");    
+    }
+}
