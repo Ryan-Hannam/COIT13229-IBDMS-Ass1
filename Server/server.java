@@ -21,6 +21,27 @@ public class server {
         catch(IOException e){
             System.out.println("Listen socket: "+e.getMessage());
         }
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new gui().setVisible(true);
+            }
+        });
     }
 }
 
@@ -49,18 +70,18 @@ class Connection extends Thread {
         catch (EOFException e){
             System.out.println("EOF:"+e.getMessage());
 		} 
-        catch(IOException i) {
-            System.out.println("readline:"+i.getMessage());
+        catch(IOException e) {
+            System.out.println("readline:"+e.getMessage());
 		} 
-        catch(ClassNotFoundException ex){
-					 ex.printStackTrace();
+        catch(ClassNotFoundException e){
+					 e.printStackTrace();
 		}
         finally{
             try {
                 clientSocket.close();
             }
-            catch (IOException j){
-                System.out.println("readline: "+j.getMessage());
+            catch (IOException e){
+                System.out.println("readline: "+e.getMessage());
             }
         }
 	}
@@ -98,24 +119,3 @@ class Connection extends Thread {
 //     recallAll();
 //     System.exit(0);
 // }
-
-//gui
-//todo: GUI
-private void UI(){
-    JFrame frame = new JFrame("IBDMS");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //todo: replace this with Recall message
-    frame.setLayout(new BorderLayout());
-    frame.add(new newPane());
-}
-
-public class newPane extends JPanel{
-    public newPane(){
-        //todo: construct internal layout
-        //needs
-            //"Action Pane" left side with buttons
-            //functional buttons to left top
-            //messages to left bottom
-            //"Map Pane" remainder screen space
-        System.out.println("Under construction");    
-    }
-}
