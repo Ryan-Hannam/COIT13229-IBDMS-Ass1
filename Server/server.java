@@ -1,6 +1,7 @@
 package Server;
 
-import java.awt.*;
+
+//import java.awt.*;
 import javax.swing.*;
 import java.io.*;
 import java.net.*;
@@ -28,13 +29,17 @@ public class server {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } 
+        catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } 
+        catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } 
+        catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } 
+        catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -94,45 +99,45 @@ public class server {
 }
 
 class Connection extends Thread {
-
-	ObjectInputStream in;
-	ObjectOutputStream out;
-	Socket clientSocket;
-
-	public Connection (Socket aClientSocket) {
-		try {
-			clientSocket = aClientSocket;
-			in = new ObjectInputStream( clientSocket.getInputStream());
-			out =new ObjectOutputStream( clientSocket.getOutputStream());
-			this.start();
-		} catch(IOException e){
-            System.out.println("Connection:"+e.getMessage());
+    ObjectInputStream in;
+    ObjectOutputStream out;
+    Socket clientSocket;
+    private LinkedList<drone> droneLinkedList;
+    public Connection (Socket aClientSocket, LinkedList<drone> drones){
+        droneLinkedList = new LinkedList<>();
+        droneLinkedList = drones;
+        try{
+            clientSocket = aClientSocket;
+            in = new ObjectInputStream(clientSocket.getInputStream());
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+            this.start();
+            System.out.println("thread started "+in.getClass()); //todo: display in text box
         }
-	}
-
-	public void run(){
-        try {
-            //todo: invoke read from .csv?
-            //todo: invoke gui?
-		}
-        catch (EOFException e){
-            System.out.println("EOF:"+e.getMessage());
-		} 
-        catch(IOException e) {
-            System.out.println("readline:"+e.getMessage());
-		} 
-        catch(ClassNotFoundException e){
-					 e.printStackTrace();
-		}
-        finally{
-            try {
-                clientSocket.close();
-            }
-            catch (IOException e){
-                System.out.println("readline: "+e.getMessage());
-            }
+        catch(IOException e){
+            System.out.println("Connection:"+e.getMessage()); //todo: display in text box
         }
-	}
+    }
+
+    public LinkedList<drone> getDroneList(){
+        return this.droneLinkedList;
+    }
+
+    @Override
+    public void run(){
+        drone data;
+        List <drone> list = new LinkedList<>();
+        String finish = "";
+        try{
+            String option = (String) in.readObject();
+            //todo: flesh out
+        }
+        catch(EOFException e){
+            System.out.println("EOF:":+e.getMessage());
+        }
+        catch(IOException | ClassNotFoundException e){
+            System.out.println("IO:"+e.getMessage());
+        }
+    }
 }
 
 //server core
