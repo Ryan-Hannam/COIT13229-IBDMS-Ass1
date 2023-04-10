@@ -221,19 +221,19 @@ public class gui extends JFrame {
     }                      
 
     private void bDeleteFireActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        //todo: call deleteFire()
+        //server.deleteFire()
     }                                           
 
     private void bMoveDroneActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        //todo: call moveDrone()
+        //server.moveDrone()
     } 
 
     private void bRecallAllActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        //todo: call recallAll()
+        //server.recallAll()
     }                                            
 
     private void bShutdownActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        //todo: call shutdown()
+        server.shutdown();
     }                                         
 
     //main() code for debugging/running GUI

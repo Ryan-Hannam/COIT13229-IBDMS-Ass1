@@ -43,6 +43,54 @@ public class server {
             }
         });
     }
+
+    //shutdown the server & recall all drones
+    public static void shutdown(){
+        // recallAll();
+        System.exit(0);
+    }
+
+    //todo: read from .csv
+    // private void readFile(){
+    //     List<List<String>> fires = new ArrayList<>();
+    //         try(Scanner s = new Scanner(new File("fires.csv"));) {
+    //             while(s.hasNextLine()){
+    //                 fires.add(getRecordFromLine(s.nextLine()));
+    //             }
+    //         }
+    // }
+
+    // private List<String> getRecordFromLine(String line){
+    //     List<String> values = new ArrayList<String>();
+    //     try(Scanner r = new Scanner(line)){
+    //         while r.hasNext()){
+    //             values.add(r.next());
+    //         }
+    //     }
+    //     return values;
+    //  }
+
+    //admin
+    //todo: delete fire
+    // public static void deleteFire(){
+    //    delete fire from linked list - have commented code for testing .csv deletion?
+    // }
+
+    //todo: recall all
+    // public static void recallAll(){
+    //     foreach?
+    //     sendrecall()
+    // }
+
+    //todo: move drone
+    // public static void moveDrone(){
+    //     setDroneXPos
+    //     setDroneYPos
+    //     sendtoDrone
+    // }
+
+    
+
 }
 
 class Connection extends Thread {
@@ -63,9 +111,9 @@ class Connection extends Thread {
 	}
 
 	public void run(){
-		try {
-            //read from .csv here??
-            //GUI here?
+        try {
+            //todo: invoke read from .csv?
+            //todo: invoke gui?
 		}
         catch (EOFException e){
             System.out.println("EOF:"+e.getMessage());
@@ -92,30 +140,5 @@ class Connection extends Thread {
 //todo: load saved drone binary
 //todo: receive drone reg
 //todo: save drone details
-//todo: display position (print until GUI)
+//todo: display position (print into GUI)
 //todo: send instructions to any drone
-
-//admin
-//todo: delete fire
-// private void deleteFire(){
-//    delete fire from .csv?
-// }
-
-//todo: recall all
-// private void recallAll(){
-//     foreach?
-//     sendrecall()
-// }
-
-//todo: move drone
-// private voice moveDrone(){
-//     setDroneXPos
-//     setDroneYPos
-//     sendtoDrone
-// }
-
-//todo: shut down server 
-// private void shutdown(){
-//     recallAll();
-//     System.exit(0);
-// }
