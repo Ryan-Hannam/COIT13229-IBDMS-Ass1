@@ -2,13 +2,16 @@ package Server;
 
 
 //import java.awt.*;
+import java.rmi.*;
 import javax.swing.*;
+
+import Domain.drone;
+
 import java.io.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
 
-//todo: multithread
 public class server {
     public static void main (String args[]){
         try{
@@ -102,6 +105,7 @@ class Connection extends Thread {
     ObjectInputStream in;
     ObjectOutputStream out;
     Socket clientSocket;
+    java.rmi.registry.Registry registry;
     private LinkedList<drone> droneLinkedList;
     public Connection (Socket aClientSocket, LinkedList<drone> drones){
         droneLinkedList = new LinkedList<>();

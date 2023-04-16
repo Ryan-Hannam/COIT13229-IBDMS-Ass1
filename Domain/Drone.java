@@ -1,26 +1,32 @@
-package Server;
+package Domain;
 
+import java.rmi.*;
 import java.io.*;
 
-public class drone implements Serializable{
+public class Drone implements Serializable{
     private int droneID;
     private String droneName;
     private double droneXPos;
     private double droneYPos;
     private static long serialVersionUID = 123789L;
 
-    public drone(){
+    public Drone(){
 
     }
 
-    public drone(int droneID, String droneName, double droneXPos, double droneYPos){
+    public Drone(int droneID){
+        this.droneID = droneID;
+        //todo: load stored, serialised drone
+    }
+
+    public Drone(int droneID, String droneName, double droneXPos, double droneYPos){
         this.droneID = droneID;
         this.droneName = droneName;
         this.droneXPos = droneXPos;
         this.droneYPos = droneYPos;
     }
 
-    public drone(drone another){
+    public Drone(Drone another){
         this(another.getDroneID(),another.getDroneName(),another.getDroneXPos(),another.getDroneYPos());
     }
 
@@ -61,5 +67,3 @@ public class drone implements Serializable{
         return String.format("Drone ID: %d Drone Name: %s\n x Position: %f y Position %f\n", this.droneID, this.droneName,this.droneXPos,this.droneYPos);
     }
 }
-
-//todo flesh out drone data

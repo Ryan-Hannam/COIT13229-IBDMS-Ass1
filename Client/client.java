@@ -1,11 +1,11 @@
 package Client;
 
-import Client.drone;
+import java.rmi.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class client {
+public class Client {
     public static void main (String args[]){
         Socket s = null;
         String hostName = "localhost";
@@ -19,7 +19,7 @@ public class client {
             String data = in.readUTF();
             System.out.println("Received message from: " + data);
         }
-        catch (UnknownHostException e){
+        catch (java.net.UnknownHostException e){
             System.out.println("Sock: "+e.getMessage());
         }
         catch (EOFException e){
@@ -39,12 +39,12 @@ public class client {
         }
     }
 
-    public String registerDrone(Client.drone drone){    
+    public String registerDrone(Drone drone){    
         Scanner sa = new Scanner(System.in);
         String response = "Problem with Server Connection";
         System.out.println("Enter Drone ID");
         String droneID = sa.nextLine();
-        //todo: feed this to drone or make the drone.java file, the one that establishes the connection
+        
         return response;
     }
 

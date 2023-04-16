@@ -3,7 +3,7 @@ package Server;
 import javax.swing.*;
 import java.awt.*;
 
-public class gui extends JFrame {
+public class GUI extends JFrame {
     private JButton bDeleteFire;
     private JButton bMoveDrone;
     private JButton bRecallAll;
@@ -14,9 +14,9 @@ public class gui extends JFrame {
     private JPanel pInformation;
     private JPanel pMap;
     private JPanel pWestPane;
-    private JTextField tInformation;
+    public JTextField tInformation;
 
-    public gui() {
+    public GUI() {
         initComponents();
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -27,22 +27,22 @@ public class gui extends JFrame {
             }
         } 
         catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         // create and display form
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new gui().setVisible(true);
+                new GUI().setVisible(true);
             }
         });
     }
@@ -247,22 +247,22 @@ public class gui extends JFrame {
             }
         } 
         catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
         // create and display form
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new gui().setVisible(true);
+                new GUI().setVisible(true);
             }
         });
     }  
