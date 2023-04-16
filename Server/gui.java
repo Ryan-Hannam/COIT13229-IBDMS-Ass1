@@ -47,7 +47,7 @@ public class GUI extends JFrame {
         });
     }
                          
-    private void initComponents() {
+    public void initComponents() {
         //create components
         pWestPane = new JPanel();
         pFunctions = new JPanel();
@@ -233,7 +233,7 @@ public class GUI extends JFrame {
     }                                            
 
     private void bShutdownActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        server.shutdown();
+        Server.shutdown();
     }                                         
 
     //main() code for debugging/running GUI

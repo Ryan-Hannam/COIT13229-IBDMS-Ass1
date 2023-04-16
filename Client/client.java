@@ -1,11 +1,15 @@
 package Client;
 
-import java.rmi.*;
+import Domain.Drone;
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class Client {
+    private LinkedList<Drone> droneList = new LinkedList<>();
+    
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
     public static void main (String args[]){
         Socket s = null;
         String hostName = "localhost";
@@ -37,20 +41,29 @@ public class Client {
                 System.out.println("close: "+e.getMessage());
             }
         }
+        // Scanner sa = new Scanner(System.in);
+        // System.out.println("Please register drone.");
+        // System.out.println("Enter Drone ID:");
+        // int droneID = Integer.parseInt(sa.nextLine());
+        // System.out.println("Enter Drone Name:");
+        // String droneName = sa.nextLine();
+        // System.out.println("Enter Drone xPos:");
+        // double droneXPos = Double.parseDouble(sa.nextLine());
+        // System.out.println("Enter Drone yPos:");
+        // double droneYPos = Double.parseDouble(sa.nextLine());
+        //while (true) fire report system (input x,y then report?)
     }
 
     public String registerDrone(Drone drone){    
-        Scanner sa = new Scanner(System.in);
-        String response = "Problem with Server Connection";
-        System.out.println("Enter Drone ID");
-        String droneID = sa.nextLine();
-        
+        String response = "";
+        droneList.add(drone);
+        response = sendDataToServer();
         return response;
     }
 
     public void dronePosUpdate(){
-        //private drone xPOS = drone.getDroneXPos();
-        //private drone yPOS = drone.getDroneYPos();
+        //private double droneXPos = Drone.getDroneXPos();
+        //private double droneYPos = Drone.getDroneYPos();
         //send drone XPos,YPos to server
     }
 
@@ -59,14 +72,28 @@ public class Client {
         //send fireID,posX,posY to server
     }
 
-    public void acknowldegeRecall(){
-        //if condition to check for received message?
+    public static void acknowldegeRecall(){
         System.out.println("Drone RTB");
         System.exit(0);
     }
-}
 
-//todo: register drone
-//todo: drone position update
-//todo: fire detection message
-//todo: achknowledge recall
+    public String sendDataToServer(){
+        if (droneList.size() > 0) {
+            try {
+                objectOutputStream.writeObject("register");
+                objectOutputStream.writeObject(droneList);
+                droneList = new LinkedList<>();
+                String response = (String) objectInputStream.readObject();
+                return response;
+            } 
+            catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return "Failed to Send Data to Server";
+    }
+
+    protected void finalise(){
+        sendDataToServer();
+    }
+}

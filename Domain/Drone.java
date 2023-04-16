@@ -1,6 +1,5 @@
 package Domain;
 
-import java.rmi.*;
 import java.io.*;
 
 public class Drone implements Serializable{
@@ -12,11 +11,6 @@ public class Drone implements Serializable{
 
     public Drone(){
 
-    }
-
-    public Drone(int droneID){
-        this.droneID = droneID;
-        //todo: load stored, serialised drone
     }
 
     public Drone(int droneID, String droneName, double droneXPos, double droneYPos){

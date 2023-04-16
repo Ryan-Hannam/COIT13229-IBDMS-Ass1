@@ -1,18 +1,23 @@
 package Server;
 
-
-//import java.awt.*;
+import Domain.Drone;
+import Domain.Fire;
 import java.rmi.*;
 import javax.swing.*;
 
-import Domain.drone;
+import Client.Client;
 
 import java.io.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
 
-public class server {
+public class Server {
+    private DataStorage dataStorage;
+    private LinkedList<Drone> droneList;
+
+    private static final String droneFileName = "drone.ser";
+    private static final String fireFileName = "fires.csv";
     public static void main (String args[]){
         try{
             int serverPort = 7896;
@@ -34,49 +39,29 @@ public class server {
             }
         } 
         catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } 
         catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new gui().setVisible(true);
+                new GUI().setVisible(true);
             }
         });
     }
 
     //shutdown the server & recall all drones
     public static void shutdown(){
-        // recallAll();
+        Client.acknowldegeRecall(); //if in production - should be an rmi function
         System.exit(0);
     }
-
-    //todo: read from .csv
-    // private void readFile(){
-    //     List<List<String>> fires = new ArrayList<>();
-    //         try(Scanner s = new Scanner(new File("fires.csv"));) {
-    //             while(s.hasNextLine()){
-    //                 fires.add(getRecordFromLine(s.nextLine()));
-    //             }
-    //         }
-    // }
-
-    // private List<String> getRecordFromLine(String line){
-    //     List<String> values = new ArrayList<String>();
-    //     try(Scanner r = new Scanner(line)){
-    //         while r.hasNext()){
-    //             values.add(r.next());
-    //         }
-    //     }
-    //     return values;
-    //  }
 
     //admin
     //todo: delete fire
@@ -96,9 +81,6 @@ public class server {
     //     setDroneYPos
     //     sendtoDrone
     // }
-
-    
-
 }
 
 class Connection extends Thread {
@@ -106,8 +88,8 @@ class Connection extends Thread {
     ObjectOutputStream out;
     Socket clientSocket;
     java.rmi.registry.Registry registry;
-    private LinkedList<drone> droneLinkedList;
-    public Connection (Socket aClientSocket, LinkedList<drone> drones){
+    private LinkedList<Drone> droneLinkedList;
+    public Connection (Socket aClientSocket, LinkedList<Drone> drones){
         droneLinkedList = new LinkedList<>();
         droneLinkedList = drones;
         try{
@@ -122,21 +104,21 @@ class Connection extends Thread {
         }
     }
 
-    public LinkedList<drone> getDroneList(){
+    public LinkedList<Drone> getDroneList(){
         return this.droneLinkedList;
     }
 
     @Override
     public void run(){
-        drone data;
-        List <drone> list = new LinkedList<>();
+        Drone data;
+        List <Drone> list = new LinkedList<>();
         String finish = "";
         try{
             String option = (String) in.readObject();
             //todo: flesh out
         }
         catch(EOFException e){
-            System.out.println("EOF:":+e.getMessage());
+            System.out.println("EOF:"+e.getMessage());
         }
         catch(IOException | ClassNotFoundException e){
             System.out.println("IO:"+e.getMessage());
