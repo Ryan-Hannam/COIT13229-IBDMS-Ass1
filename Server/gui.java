@@ -3,7 +3,7 @@ package Server;
 import javax.swing.*;
 import java.awt.*;
 
-public class GUI extends JFrame {
+public class GUI extends JFrame { //unsure why this throws error
     private JButton bDeleteFire;
     private JButton bMoveDrone;
     private JButton bRecallAll;

@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class Client {
+public class Client { //unsure why this throws error - should match java naem now ...
     private LinkedList<Drone> droneList = new LinkedList<>();
     
     private ObjectInputStream objectInputStream;
