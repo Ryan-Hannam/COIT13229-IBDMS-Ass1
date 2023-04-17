@@ -13,54 +13,56 @@ import java.security.*;
 import java.util.*;
 
 public class Server {
+
+    //properties
     private DataStorage dataStorage;
-    private LinkedList<Drone> droneList;
+    private static GUI guiFrame;
+
+    private static LinkedList<Drone> droneList;
+    private static LinkedList<Fire> fireList;
 
     private static final String droneFileName = "drone.ser";
     private static final String fireFileName = "fires.csv";
-    public static void main (String args[]){
-        try{
-            int serverPort = 7896;
+    private static final int serverPort = 7896;
+
+    //constructor
+    Server() {
+
+        dataStorage = new DataStorage();
+        guiFrame = new GUI();
+
+        //need to populate arrays from text files
+        fireList = dataStorage.readFiresFromFile(droneFileName);
+
+    }
+
+    public static void main (String args[]) {
+
+        //setup GUI
+        guiFrame.setVisible(true);
+
+        //start listening for incoming connection
+        try {
+            
             ServerSocket listenSocket = new ServerSocket(serverPort);
+
             while(true){
                 Socket clientSocket=listenSocket.accept();
-                Connection c = new Connection(clientSocket);
+                Connection connection = new Connection(clientSocket, droneList);
             }
         }
         catch(IOException e){
             System.out.println("Listen socket: "+e.getMessage());
         }
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } 
-        catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-        catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-        catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-        catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI().setVisible(true);
-            }
-        });
+        
     }
 
     //shutdown the server & recall all drones
     public static void shutdown(){
+
         Client.acknowldegeRecall(); //if in production - should be an rmi function
         System.exit(0);
+        
     }
 
     //admin
