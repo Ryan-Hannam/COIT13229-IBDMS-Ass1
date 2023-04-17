@@ -83,49 +83,6 @@ public class Server {
     // }
 }
 
-class Connection extends Thread {
-    ObjectInputStream in;
-    ObjectOutputStream out;
-    Socket clientSocket;
-    java.rmi.registry.Registry registry;
-    private LinkedList<Drone> droneLinkedList;
-    public Connection (Socket aClientSocket, LinkedList<Drone> drones){
-        droneLinkedList = new LinkedList<>();
-        droneLinkedList = drones;
-        try{
-            clientSocket = aClientSocket;
-            in = new ObjectInputStream(clientSocket.getInputStream());
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
-            this.start();
-            System.out.println("thread started "+in.getClass()); //todo: display in text box
-        }
-        catch(IOException e){
-            System.out.println("Connection:"+e.getMessage()); //todo: display in text box
-        }
-    }
-
-    public LinkedList<Drone> getDroneList(){
-        return this.droneLinkedList;
-    }
-
-    @Override
-    public void run(){
-        Drone data;
-        List <Drone> list = new LinkedList<>();
-        String finish = "";
-        try{
-            String option = (String) in.readObject();
-            //todo: flesh out
-        }
-        catch(EOFException e){
-            System.out.println("EOF:"+e.getMessage());
-        }
-        catch(IOException | ClassNotFoundException e){
-            System.out.println("IO:"+e.getMessage());
-        }
-    }
-}
-
 //server core
 //todo: load data from fires.csv
 //todo: load saved drone binary
