@@ -235,7 +235,17 @@ public class GUI extends JFrame { //unsure why this throws error
 
     private void bShutdownActionPerformed(java.awt.event.ActionEvent evt) {                                          
         Server.shutdown();
-    }                                         
+    }                     
+    
+    public void addMessageToConsole(String message) {
+
+        System.out.println(message);
+
+        String textFieldContent = tInformation.getText();
+
+        tInformation.setText(textFieldContent + "\n" + message);
+
+    }
 
     //main() code for debugging/running GUI
     // public static void main(String args[]) {

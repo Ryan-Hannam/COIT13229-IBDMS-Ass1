@@ -29,7 +29,6 @@ public class Server {
     Server() {
 
         dataStorage = new DataStorage();
-        guiFrame = new GUI();
 
         //need to populate arrays from text files
         fireList = dataStorage.readFiresFromFile(droneFileName);
@@ -39,7 +38,11 @@ public class Server {
     public static void main (String args[]) {
 
         //setup GUI
+        GUI guiFrame = new GUI();
         guiFrame.setVisible(true);
+
+        //Test populating the console log panel
+        guiFrame.addMessageToConsole("test");
 
         //start listening for incoming connection
         try {
