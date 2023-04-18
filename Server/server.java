@@ -31,7 +31,7 @@ public class Server {
         dataStorage = new DataStorage();
 
         //need to populate arrays from text files
-        fireList = dataStorage.readFiresFromFile(droneFileName);
+        fireList = dataStorage.readFiresFromFile(fireFileName);
 
     }
 
