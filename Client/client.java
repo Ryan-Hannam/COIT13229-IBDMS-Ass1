@@ -10,7 +10,7 @@ public class Client { //unsure why this throws error - should match java naem no
     
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
-    public static void main (String args[]){
+    public static void main (String args[]) throws InterruptedException{
         Socket s = null;
         String hostName = "localhost";
         String message = "Drone connected";
@@ -52,6 +52,15 @@ public class Client { //unsure why this throws error - should match java naem no
         // System.out.println("Enter Drone yPos:");
         // double droneYPos = Double.parseDouble(sa.nextLine());
         //while (true) fire report system (input x,y then report?)
+        
+        //timer to update drone pos every 1000 milliseconds - called after drone registration
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask(){
+            public void run(){
+                dronePosUpdate();
+            }
+        };
+        timer.schedule(task, 0,1000);
     }
 
     public String registerDrone(Drone drone){    
@@ -61,10 +70,11 @@ public class Client { //unsure why this throws error - should match java naem no
         return response;
     }
 
-    public void dronePosUpdate(){
-        //private double droneXPos = Drone.getDroneXPos();
-        //private double droneYPos = Drone.getDroneYPos();
+    public static void dronePosUpdate(){       
+        //double droneXPos = Drone.getDroneXPos(); <-- need to somehow call this as a non-static function ...
+        //double droneYPos = Drone.getDroneYPos();
         //send drone XPos,YPos to server
+        System.out.println("Drone Position (x,y):"+"xPos"+","+"yPos"+" Sent to Server");
     }
 
     public void fireDetection(){
