@@ -45,22 +45,75 @@ class Connection extends Thread {
     @Override
     public void run(){
 
-        Drone data;
-        LinkedList<Drone> list = new LinkedList<Drone>();
-        String finish = "";
-
         try {
 
-            String option = (String) in.readObject();
-            //todo: flesh out
+            while(true) {
+
+                Object object = in.readObject();
+
+                if (object instanceof Drone) {
+
+                    //typecase object to drone
+                    Drone droneFromClient = (Drone) object;
+
+                    //check if drone array already contains a drone with the same id
+                    if (droneLinkedList.contains(droneFromClient)) {
+
+                        
+
+                    } else {
+
+                        droneLinkedList.add(droneFromClient);
+                        System.out.println("Drone added");
+                        
+
+                    }
+
+                }
+
+            }
+
+        } 
+
+        catch ( EOFException e) {
+            System.out.println("EOF:"+e.getMessage());
+            e.printStackTrace();
         }
 
-        catch(EOFException e){
-            System.out.println("EOF:"+e.getMessage());
+        catch( IOException e) {
+            System.out.println("readline:"+e.getMessage());
+            e.printStackTrace();
         }
+
+        catch( ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        finally
+        { try {
+                clientSocket.close();
+            }
+            
+            catch ( IOException e)
+            {/*close failed*/}
+        }
+
+        // Drone data;
+        // LinkedList<Drone> list = new LinkedList<Drone>();
+        // String finish = "";
+
+        // try {
+
+        //     String option = (String) in.readObject();
+        //     //todo: flesh out
+        // }
+
+        // catch(EOFException e){
+        //     System.out.println("EOF:"+e.getMessage());
+        // }
         
-        catch(IOException | ClassNotFoundException e){
-            System.out.println("IO:"+e.getMessage());
-        }
+        // catch(IOException | ClassNotFoundException e){
+        //     System.out.println("IO:"+e.getMessage());
+        // }
     }
 }
