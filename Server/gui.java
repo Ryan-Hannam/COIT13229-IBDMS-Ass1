@@ -18,33 +18,6 @@ public class GUI extends JFrame { //unsure why this throws error
 
     public GUI() {
         initComponents();
-        // try {
-        //     // for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-        //     //     if ("Nimbus".equals(info.getName())) {
-        //     //         UIManager.setLookAndFeel(info.getClassName());
-        //     //         break;
-        //     //     }
-        //     // }
-        // } 
-        // catch (ClassNotFoundException ex) {
-        //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        // } 
-        // catch (InstantiationException ex) {
-        //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        // } 
-        // catch (IllegalAccessException ex) {
-        //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        // } 
-        // catch (UnsupportedLookAndFeelException ex) {
-        //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        // }
-
-        // create and display form
-        // EventQueue.invokeLater(new Runnable() {
-        //     public void run() {
-        //         new GUI().setVisible(true);
-        //     }
-        // });
     }
                          
     public void initComponents() {
@@ -226,7 +199,7 @@ public class GUI extends JFrame { //unsure why this throws error
     }                                           
 
     private void bMoveDroneActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        //server.moveDrone();
+        Server.moveDrone();
     } 
 
     private void bRecallAllActionPerformed(java.awt.event.ActionEvent evt) {                                             
