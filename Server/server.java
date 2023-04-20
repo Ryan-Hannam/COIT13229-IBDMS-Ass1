@@ -40,7 +40,7 @@ public class Server {
         //setup GUI
         GUI guiFrame = new GUI();
         guiFrame.setVisible(true);
-
+        
         //Test populating the console log panel
         guiFrame.addMessageToConsole("test");
 
@@ -68,24 +68,38 @@ public class Server {
         
     }
 
-    //admin
+    //admin controls
+    
     //todo: delete fire
-    // public static void deleteFire(){
-    //    delete fire from linked list - have commented code for testing .csv deletion?
-    // }
+    public static void deleteFire(){
+    //  delete fire from linked list - have commented code for testing .csv deletion?
+    int delFireID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the FireID you wish to delete."));
+    fireList.remove(delFireID); //just removes fire at the position specified for now
+    System.out.println("Fire with ID: " + delFireID + "Deleted"); //needs to print to GUI
+    }
 
     //todo: recall all
-    // public static void recallAll(){
-    //     foreach?
-    //     sendrecall()
-    // }
+    public static void recallAll(){
+        
+        Client.acknowldegeRecall();
+        System.out.println("All Drones RTB");
+
+    }
 
     //todo: move drone
-    // public static void moveDrone(){
-    //     setDroneXPos
-    //     setDroneYPos
-    //     sendtoDrone
-    // }
+    public static void moveDrone(){
+        int droneID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the Drone ID for the drone you want to move."));
+        int droneXPos = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the new x Coord."));
+        int droneYPos = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the new y Coord."));
+        if(droneXPos <= 100 && droneYPos <= 100){
+            //Drone.setDroneXPos(droneXPos);
+            //Drone.setDroneYPos(droneYPos);
+            JOptionPane.showMessageDialog(null, "Drone " + droneID + "is moved to (x,y): " + droneXPos + ", " + droneYPos);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please enter an x and y value below 100");
+        }
+    }
 }
 
 //server core

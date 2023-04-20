@@ -222,15 +222,15 @@ public class GUI extends JFrame { //unsure why this throws error
     }                      
 
     private void bDeleteFireActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        //server.deleteFire()
+        Server.deleteFire();
     }                                           
 
     private void bMoveDroneActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        //server.moveDrone()
+        //server.moveDrone();
     } 
 
     private void bRecallAllActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        //server.recallAll()
+        Server.recallAll();
     }                                            
 
     private void bShutdownActionPerformed(java.awt.event.ActionEvent evt) {                                          

@@ -1,5 +1,6 @@
 package Client;
 
+import Domain.Fire;
 import Domain.Drone;
 import java.io.*;
 import java.net.*;
@@ -59,7 +60,7 @@ public class Client { //unsure why this throws error - should match java naem no
                 e.printStackTrace();
             }
 
-            // out.writeUTF(message);
+            out.writeUTF(message);
 
             // String data = in.readUTF();
             // System.out.println("Received message from: " + data);
@@ -83,26 +84,15 @@ public class Client { //unsure why this throws error - should match java naem no
                 System.out.println("close: "+e.getMessage());
             }
         }
-        // Scanner sa = new Scanner(System.in);
-        // System.out.println("Please register drone.");
-        // System.out.println("Enter Drone ID:");
-        // int droneID = Integer.parseInt(sa.nextLine());
-        // System.out.println("Enter Drone Name:");
-        // String droneName = sa.nextLine();
-        // System.out.println("Enter Drone xPos:");
-        // double droneXPos = Double.parseDouble(sa.nextLine());
-        // System.out.println("Enter Drone yPos:");
-        // double droneYPos = Double.parseDouble(sa.nextLine());
-        //while (true) fire report system (input x,y then report?)
         
-        //timer to update drone pos every 1000 milliseconds - called after drone registration
-        // Timer timer = new Timer();
-        // TimerTask task = new TimerTask(){
-        //     public void run(){
-        //         dronePosUpdate();
-        //     }
-        // };
-        // timer.schedule(task, 0,1000);
+        //timer to update drone pos every 10000 milliseconds - called after drone registration
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask(){
+            public void run(){
+                dronePosUpdate();
+            }
+        };
+        timer.schedule(task, 0, 10000);
     }
 
     public String registerDrone(Drone drone){    
@@ -119,9 +109,10 @@ public class Client { //unsure why this throws error - should match java naem no
         System.out.println("Drone Position (x,y):"+"xPos"+","+"yPos"+" Sent to Server");
     }
 
-    public void fireDetection(){
+    public void fireDetection(int fireID, double fireXPos, double fireYPos, int fireDroneID, int fireSeverity){
         System.out.println("Fire detected, sending to server");
-        //send fireID,posX,posY to server
+        Fire newFire = new Fire(fireID, fireXPos, fireYPos, fireDroneID, fireSeverity);
+        String response = sendDataToServer();
     }
 
     public static void acknowldegeRecall(){
@@ -130,7 +121,7 @@ public class Client { //unsure why this throws error - should match java naem no
     }
 
     public String sendDataToServer(){
-        if (droneList.size() > 0) {
+        if (droneList.size() >= 0) {
             try {
                 objectOutputStream.writeObject("register");
                 objectOutputStream.writeObject(droneList);

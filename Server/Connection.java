@@ -8,8 +8,11 @@ import java.net.Socket;
 import java.util.LinkedList;
 
 import Domain.Drone;
+import Server.GUI;
 
 class Connection extends Thread {
+
+    private static GUI guiFrame;
 
     ObjectInputStream in;
     ObjectOutputStream out;
@@ -44,7 +47,6 @@ class Connection extends Thread {
 
     @Override
     public void run(){
-
         try {
 
             while(true) {
@@ -65,7 +67,7 @@ class Connection extends Thread {
 
                         droneLinkedList.add(droneFromClient);
                         System.out.println("Drone added");
-                        
+                        guiFrame.addMessageToConsole(droneFromClient.toString());
 
                     }
 
