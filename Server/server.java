@@ -15,7 +15,7 @@ import java.util.*;
 public class Server {
 
     //properties
-    private DataStorage dataStorage;
+    private static DataStorage dataStorage;
     private static GUI guiFrame;
 
     private static LinkedList<Drone> droneList;
@@ -26,23 +26,21 @@ public class Server {
     private static final int serverPort = 7896;
 
     //constructor
-    Server() {
+    Server() { }
+
+    public static void main (String args[]) {
 
         dataStorage = new DataStorage();
 
         //need to populate arrays from text files
         fireList = dataStorage.readFiresFromFile(fireFileName);
 
-    }
-
-    public static void main (String args[]) {
-
         //setup GUI
-        GUI guiFrame = new GUI();
+        guiFrame = new GUI();
         guiFrame.setVisible(true);
         
         //Test populating the console log panel
-        guiFrame.addMessageToConsole("test");
+        // guiFrame.addMessageToConsole("test");
 
         //start listening for incoming connection
         try {
@@ -73,9 +71,32 @@ public class Server {
     //todo: delete fire
     public static void deleteFire(){
     //  delete fire from linked list - have commented code for testing .csv deletion?
-    int delFireID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the FireID you wish to delete."));
-    fireList.remove(delFireID); //just removes fire at the position specified for now
-    System.out.println("Fire with ID: " + delFireID + "Deleted"); //needs to print to GUI
+    Integer delFireID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the FireID you wish to delete."));
+
+    Fire toBeDeletedFire = fireList.stream()
+        .filter(fire -> delFireID.equals(Integer.valueOf(fire.getfireID())))
+        .findAny()
+        .orElse(null);
+
+    if (toBeDeletedFire == null) {
+    
+        //let user know that fire doesn't exist with ID
+        System.out.println("No fire exists with ID: " + delFireID);
+        guiFrame.addMessageToConsole("No fire exists with ID: " + delFireID);
+    
+    } else {
+
+        //delete the fire that matches
+        fireList.remove(toBeDeletedFire);
+
+        //let user know that fire was deleted
+        System.out.println("Fire deleted for ID: " + delFireID);
+        guiFrame.addMessageToConsole("Fire deleted for ID: " + delFireID);
+
+    }
+
+    // fireList.remove(delFireID); //just removes fire at the position specified for now
+    // System.out.println("Fire with ID: " + delFireID + "Deleted"); //needs to print to GUI
     }
 
     //todo: recall all
