@@ -95,7 +95,12 @@ public class Server {
     //shutdown the server & recall all drones
     public static void shutdown(){
 
-        // Client.acknowldegeRecall(); //if in production - should be an rmi function
+        //save fires to file
+        dataStorage.writeFiresToFile(fireFileName, fireList);
+
+        //save drones to file
+        dataStorage.writeDroneToFile(droneFileName, droneList);
+
         System.exit(0);
         
 

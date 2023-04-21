@@ -85,13 +85,23 @@ public class DataStorage {
         return droneList;
     }
     //writes fires to a file
-    public boolean writeFiresToFile(String fileName, Fire fire){
+    public boolean writeFiresToFile(String fileName, LinkedList<Fire> fireList){
+
         try {
             //creates new file
             File fireFile = new File(fileName);
             this.fileOutputStream = new FileOutputStream(fileName, true);
-            //formats data as .csv
-            fileOutputStream.write((fire.getfireID() + "," + fire.getfireXPos() + "," + fire.getfireYPos() + "," + fire.getFireDroneID() + "," + fire.getFireSeverity() + "\n").getBytes());
+            
+            for (Fire fire : fireList) {
+
+                //formats data as .csv
+                fileOutputStream.write((fire.getfireID() + "," + fire.getfireXPos() + "," + fire.getfireYPos() + "," + fire.getFireDroneID() + "," + fire.getFireSeverity() + "\n").getBytes());
+
+            }
+
+            objectOutputStream.flush();
+            objectOutputStream.close();
+
             return true;
         } 
         catch (Exception e) {
