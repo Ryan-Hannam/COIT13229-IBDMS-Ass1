@@ -22,6 +22,8 @@ public class Server {
     private static LinkedList<Drone> droneList;
     private static LinkedList<Fire> fireList;
 
+    private static ArrayList<Connection> connectedClients;
+
     private static final String droneFileName = "drone.ser";
     private static final String fireFileName = "fires.csv";
     private static final int serverPort = 8888;
@@ -35,6 +37,7 @@ public class Server {
 
         droneList = new LinkedList<Drone>();
         fireList = new LinkedList<Fire>();
+        connectedClients = new ArrayList<Connection>();
 
         dataStorage = new DataStorage();
 
@@ -70,11 +73,17 @@ public class Server {
 
             while(true){
 
+                //accept the connection
                 Socket clientSocket = listenSocket.accept();
 
                 System.out.println("socket connected");
 
+                //create connection instance to handle client communication
                 Connection connection = new Connection(clientSocket, droneList);
+                
+                //store reference to connection for later
+                connectedClients.add(connection);
+
             }
         }
         catch(IOException e){
@@ -86,7 +95,7 @@ public class Server {
     //shutdown the server & recall all drones
     public static void shutdown(){
 
-        Client.acknowldegeRecall(); //if in production - should be an rmi function
+        // Client.acknowldegeRecall(); //if in production - should be an rmi function
         System.exit(0);
         
 
@@ -132,8 +141,13 @@ public class Server {
     //todo: recall all
     public static void recallAll(){
         
-        Client.acknowldegeRecall();
         System.out.println("All Drones RTB");
+
+        for (Connection connection : connectedClients) {
+
+            connection.recallDroneBackToBase();
+
+        }
 
     }
 

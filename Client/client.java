@@ -58,17 +58,25 @@ public class Client { //unsure why this throws error - should match java naem no
 
             while (true) {
 
-                // try {
+                try {
+
+                    String serverOption = (String) objectInputStream.readObject();
+
+                    if (serverOption.equalsIgnoreCase("DroneReturnToBase")) {
+
+                        acknowldegeRecall();
+
+                    }
 
                     // System.out.println(objectInputStream.readObject());
                     // System.out.println();
 
-                    String data = objectInputStream.readUTF();
-                    System.out.println("Received message from: " + data);
+                    // String data = objectInputStream.readUTF();
+                    // System.out.println("Received message from: " + data);
 
-                // } catch (ClassNotFoundException e) {
-                //     e.printStackTrace();
-                // }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
 
                 // objectOutputStream.writeUTF(message);
 
@@ -126,7 +134,7 @@ public class Client { //unsure why this throws error - should match java naem no
         String response = sendDataToServer();
     }
 
-    public static void acknowldegeRecall(){
+    private static void acknowldegeRecall(){
         System.out.println("Drone RTB");
         System.exit(0);
     }

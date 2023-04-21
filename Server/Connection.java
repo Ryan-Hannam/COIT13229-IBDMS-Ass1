@@ -124,4 +124,17 @@ class Connection extends Thread {
             System.out.println("IO:"+e.getMessage());
         }
     }
+
+    public void recallDroneBackToBase() {
+
+        try {
+
+            //send return to base message to client
+            out.writeObject("DroneReturnToBase");
+
+        } catch (IOException e) {
+            System.err.println("IOException:  " + e.getMessage());
+        } 
+
+    }
 }
