@@ -143,13 +143,14 @@ public class Server {
         int droneID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the Drone ID for the drone you want to move."));
         int droneXPos = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the new x Coord."));
         int droneYPos = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the new y Coord."));
-        if(droneXPos <= 100 && droneYPos <= 100){
+        
+        if((droneXPos <= 100 && droneXPos >= 0) && (droneYPos <= 100 && droneYPos >= 0)){
             //Drone.setDroneXPos(droneXPos);
             //Drone.setDroneYPos(droneYPos);
             JOptionPane.showMessageDialog(null, "Drone " + droneID + "is moved to (x,y): " + droneXPos + ", " + droneYPos);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Please enter an x and y value below 100");
+            JOptionPane.showMessageDialog(null, "Please enter an x and y value between 0 and 100");
         }
     }
 
