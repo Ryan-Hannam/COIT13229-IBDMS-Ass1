@@ -58,6 +58,8 @@ class Connection extends Thread {
                     //typecase object to drone
                     Drone droneFromClient = (Drone) object;
 
+                    Server.addMessageToConsoleInGUI("Drone connected: " + droneFromClient.toString() );
+
                     //check if drone array already contains a drone with the same id
                     if (droneLinkedList.contains(droneFromClient)) {
 

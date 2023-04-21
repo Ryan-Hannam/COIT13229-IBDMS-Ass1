@@ -24,11 +24,14 @@ public class Server {
     private static final String droneFileName = "drone.ser";
     private static final String fireFileName = "fires.csv";
     private static final int serverPort = 7896;
-
+ß
     //constructor
     Server() { }
 
     public static void main (String args[]) {
+
+        droneList = new LinkedList<Drone>();
+        fireList = new LinkedList<Fire>();
 
         dataStorage = new DataStorage();
 
@@ -39,8 +42,9 @@ public class Server {
         guiFrame = new GUI();
         guiFrame.setVisible(true);
         
-        //Test populating the console log panel
-        // guiFrame.addMessageToConsole("test");
+        //show file loading messagesß
+        guiFrame.addMessageToConsole("Loaded fires from file - " + fireList.size() + " total");
+        guiFrame.addMessageToConsole("Loaded drones from file - " + droneList.size() + " total");
 
         //start listening for incoming connection
         try {
@@ -64,6 +68,7 @@ public class Server {
         Client.acknowldegeRecall(); //if in production - should be an rmi function
         System.exit(0);
         
+
     }
 
     //admin controls
@@ -120,6 +125,10 @@ public class Server {
         else{
             JOptionPane.showMessageDialog(null, "Please enter an x and y value below 100");
         }
+    }
+
+    public static void addMessageToConsoleInGUI(String message) {
+        guiFrame.addMessageToConsole(message);
     }
 }
 
