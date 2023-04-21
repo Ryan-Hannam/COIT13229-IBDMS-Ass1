@@ -14,7 +14,7 @@ public class GUI extends JFrame { //unsure why this throws error
     private JPanel pInformation;
     private JPanel pMap;
     private JPanel pWestPane;
-    public JTextField tInformation;
+    public JTextArea tInformation;
 
     public GUI() {
         initComponents();
@@ -32,7 +32,11 @@ public class GUI extends JFrame { //unsure why this throws error
         bShutdown = new JButton();
         pInformation = new JPanel();
         lInformation = new JLabel();
-        tInformation = new JTextField();
+        
+        tInformation = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(tInformation);
+        tInformation.setEditable(false);
+
         pMap = new JPanel();
 
         //set the x button to close the applications
