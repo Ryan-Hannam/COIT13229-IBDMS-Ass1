@@ -308,7 +308,7 @@ public class GUI extends JFrame { //unsure why this throws error
                 //draw drone text
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Arial", Font.PLAIN, 20));
-                g.drawString("Fire - ID: " + drone.getDroneID(), xPos, yPos + 65);   
+                g.drawString("Drone - ID: " + drone.getDroneID(), xPos, yPos + 65);   
 
             }
 
