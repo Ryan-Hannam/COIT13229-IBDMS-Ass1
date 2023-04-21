@@ -51,77 +51,77 @@ class Connection extends Thread {
 
         System.out.println("thread running");
 
-        // try {
+        try {
 
-        //     while(true) {
+            while(true) {
 
-        //         Object object = in.readObject();
+                Object object = in.readObject();
 
-        //         if (object instanceof Drone) {
+                if (object instanceof Drone) {
 
-        //             //typecase object to drone
-        //             Drone droneFromClient = (Drone) object;
+                    //typecase object to drone
+                    Drone droneFromClient = (Drone) object;
 
-        //             Server.addMessageToConsoleInGUI("Drone connected: " + droneFromClient.toString() );
+                    Server.addMessageToConsoleInGUI("Drone connected: " + droneFromClient.toString() );
 
-        //             //check if drone array already contains a drone with the same id
-        //             if (droneLinkedList.contains(droneFromClient)) {
+                    //check if drone array already contains a drone with the same id
+                    if (droneLinkedList.contains(droneFromClient)) {
 
                         
 
-        //             } else {
+                    } else {
 
-        //                 droneLinkedList.add(droneFromClient);
-        //                 System.out.println("Drone added");
-        //                 guiFrame.addMessageToConsole(droneFromClient.toString());
+                        droneLinkedList.add(droneFromClient);
+                        System.out.println("Drone added");
+                        Server.addMessageToConsoleInGUI(droneFromClient.toString());
 
-        //             }
+                    }
 
-        //         }
+                }
 
-        //     }
+            }
 
-        // } 
+        } 
 
-        // catch ( EOFException e) {
-        //     System.out.println("EOF:"+e.getMessage());
-        //     e.printStackTrace();
-        // }
+        catch ( EOFException e) {
+            System.out.println("EOF:"+e.getMessage());
+            e.printStackTrace();
+        }
 
-        // catch( IOException e) {
-        //     System.out.println("readline:"+e.getMessage());
-        //     e.printStackTrace();
-        // }
+        catch( IOException e) {
+            System.out.println("readline:"+e.getMessage());
+            e.printStackTrace();
+        }
 
-        // catch( ClassNotFoundException ex) {
-        //     ex.printStackTrace();
-        // }
+        catch( ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
 
-        // finally
-        // { try {
-        //         clientSocket.close();
-        //     }
+        finally
+        { try {
+                clientSocket.close();
+            }
             
-        //     catch ( IOException e)
-        //     {/*close failed*/}
-        // }
+            catch ( IOException e)
+            {/*close failed*/}
+        }
 
-        // Drone data;
-        // LinkedList<Drone> list = new LinkedList<Drone>();
-        // String finish = "";
+        Drone data;
+        LinkedList<Drone> list = new LinkedList<Drone>();
+        String finish = "";
 
-        // try {
+        try {
 
-        //     String option = (String) in.readObject();
-        //     //todo: flesh out
-        // }
+            String option = (String) in.readObject();
+            //todo: flesh out
+        }
 
-        // catch(EOFException e){
-        //     System.out.println("EOF:"+e.getMessage());
-        // }
+        catch(EOFException e){
+            System.out.println("EOF:"+e.getMessage());
+        }
         
-        // catch(IOException | ClassNotFoundException e){
-        //     System.out.println("IO:"+e.getMessage());
-        // }
+        catch(IOException | ClassNotFoundException e){
+            System.out.println("IO:"+e.getMessage());
+        }
     }
 }

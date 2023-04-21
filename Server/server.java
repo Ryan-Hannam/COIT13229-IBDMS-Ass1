@@ -24,7 +24,7 @@ public class Server {
 
     private static final String droneFileName = "drone.ser";
     private static final String fireFileName = "fires.csv";
-    private static final int serverPort = 7896;
+    private static final int serverPort = 8888;
 
     private static final int timerInterval = 10*1000;
 
@@ -54,7 +54,6 @@ public class Server {
             public void run() {
                 
                 guiFrame.redrawMap();
-                System.out.println("Listen socket: ");
 
             }
             
@@ -152,6 +151,9 @@ public class Server {
         else{
             JOptionPane.showMessageDialog(null, "Please enter an x and y value between 0 and 100");
         }
+
+        //get map to redraw
+        guiFrame.redrawMap();
     }
 
     public static void addMessageToConsoleInGUI(String message) {

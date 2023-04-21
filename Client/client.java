@@ -13,10 +13,12 @@ public class Client { //unsure why this throws error - should match java naem no
     private static ObjectInputStream objectInputStream;
     private static ObjectOutputStream objectOutputStream;
 
-    private static int serverPort = 7896;
+    private static int serverPort = 8888;
     private static String hostName = "localhost";
 
     private static Scanner scanner = new Scanner(System.in);
+
+    private static Drone drone;
 
     public static void main (String args[]) throws InterruptedException {
 
@@ -37,39 +39,42 @@ public class Client { //unsure why this throws error - should match java naem no
         droneID = scanner.nextInt();
 
         //create a new drone for instance of client using the provided info
-        Drone newdrone = new Drone(droneID, droneName, droneXPos, droneYPos);
+       drone = new Drone(droneID, droneName, droneXPos, droneYPos);
 
         try {
 
             clientSocket = new Socket (hostName, serverPort);
 
-            objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            
 
             // System.out.println(droneName);
             // System.out.println(droneID);
 
             //send drone to server
-            // objectOutputStream.writeObject(newdrone);
-            // System.out.println("Sent drone data to server");
+            objectOutputStream.writeObject(drone);
+            System.out.println("Sent drone data to server");
 
-            // while (true) {
+            while (true) {
 
-            //     try {
+                // try {
 
-            //         System.out.println(objectInputStream.readObject());
-            //         System.out.println();
+                    // System.out.println(objectInputStream.readObject());
+                    // System.out.println();
 
-            //     } catch (ClassNotFoundException e) {
-            //         e.printStackTrace();
-            //     }
+                    String data = objectInputStream.readUTF();
+                    System.out.println("Received message from: " + data);
 
-            //     objectOutputStream.writeUTF(message);
+                // } catch (ClassNotFoundException e) {
+                //     e.printStackTrace();
+                // }
 
-            // }
+                // objectOutputStream.writeUTF(message);
 
-            // String data = in.readUTF();
-            // System.out.println("Received message from: " + data);
+            }
+
+            
 
         }
         catch (java.net.UnknownHostException e){
