@@ -43,7 +43,7 @@ public class Server {
 
         //need to populate arrays from text files
         fireList = dataStorage.readFiresFromFile(fireFileName);
-        // droneList = dataStorage.readDroneFromFile(droneFileName);
+        droneList = dataStorage.readDroneFromFile(droneFileName);
 
         //setup GUI
         guiFrame = new GUI();
