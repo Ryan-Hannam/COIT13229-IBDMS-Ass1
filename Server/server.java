@@ -143,11 +143,16 @@ public class Server {
         
         System.out.println("All Drones RTB");
 
+        guiFrame.addMessageToConsole("Drones recalled to base");
+
         for (Connection connection : connectedClients) {
 
             connection.recallDroneBackToBase();
 
         }
+
+        guiFrame.addMessageToConsole("All drones back at base");
+        
 
     }
 
