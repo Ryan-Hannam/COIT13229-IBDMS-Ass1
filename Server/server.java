@@ -11,6 +11,7 @@ import java.io.*;
 import java.net.*;
 import java.security.*;
 import java.util.*;
+import java.util.Timer;
 
 public class Server {
 
@@ -24,6 +25,8 @@ public class Server {
     private static final String droneFileName = "drone.ser";
     private static final String fireFileName = "fires.csv";
     private static final int serverPort = 7896;
+
+    private static final int timerInterval = 10*1000;
 
     //constructor
     Server() { }
@@ -42,6 +45,20 @@ public class Server {
         //setup GUI
         guiFrame = new GUI();
         guiFrame.setVisible(true);
+
+        //schedule time to redraw map every 10 seconds
+        Timer mapUpdateTimer = new Timer();
+        mapUpdateTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                
+                guiFrame.redrawMap();
+                System.out.println("Listen socket: ");
+
+            }
+            
+        }, timerInterval, timerInterval);
         
         //show file loading messagesß
         guiFrame.addMessageToConsole("Loaded fires from file - " + fireList.size() + " total");
@@ -80,33 +97,37 @@ public class Server {
     
     //todo: delete fire
     public static void deleteFire(){
-    //  delete fire from linked list - have commented code for testing .csv deletion?
-    Integer delFireID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the FireID you wish to delete."));
 
-    Fire toBeDeletedFire = fireList.stream()
-        .filter(fire -> delFireID.equals(Integer.valueOf(fire.getfireID())))
-        .findAny()
-        .orElse(null);
+        //  delete fire from linked list - have commented code for testing .csv deletion?
+        Integer delFireID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the FireID you wish to delete."));
 
-    if (toBeDeletedFire == null) {
-    
-        //let user know that fire doesn't exist with ID
-        System.out.println("No fire exists with ID: " + delFireID);
-        guiFrame.addMessageToConsole("No fire exists with ID: " + delFireID);
-    
-    } else {
+        Fire toBeDeletedFire = fireList.stream()
+            .filter(fire -> delFireID.equals(Integer.valueOf(fire.getfireID())))
+            .findAny()
+            .orElse(null);
 
-        //delete the fire that matches
-        fireList.remove(toBeDeletedFire);
+        if (toBeDeletedFire == null) {
+        
+            //let user know that fire doesn't exist with ID
+            System.out.println("No fire exists with ID: " + delFireID);
+            guiFrame.addMessageToConsole("No fire exists with ID: " + delFireID);
+        
+        } else {
 
-        //let user know that fire was deleted
-        System.out.println("Fire deleted for ID: " + delFireID);
-        guiFrame.addMessageToConsole("Fire deleted for ID: " + delFireID);
+            //delete the fire that matches
+            fireList.remove(toBeDeletedFire);
 
-    }
+            //let user know that fire was deleted
+            System.out.println("Fire deleted for ID: " + delFireID);
+            guiFrame.addMessageToConsole("Fire deleted for ID: " + delFireID);
 
-    // fireList.remove(delFireID); //just removes fire at the position specified for now
-    // System.out.println("Fire with ID: " + delFireID + "Deleted"); //needs to print to GUI
+        }
+
+        //get map to redraw
+        guiFrame.redrawMap();
+
+        // fireList.remove(delFireID); //just removes fire at the position specified for now
+        // System.out.println("Fire with ID: " + delFireID + "Deleted"); //needs to print to GUI
     }
 
     //todo: recall all
@@ -134,6 +155,14 @@ public class Server {
 
     public static void addMessageToConsoleInGUI(String message) {
         guiFrame.addMessageToConsole(message);
+    }
+
+    public static LinkedList<Fire> getFireList() {
+        return Server.fireList;
+    }
+
+    public static LinkedList<Drone> getDroneList() {
+        return Server.droneList;
     }
 }
 

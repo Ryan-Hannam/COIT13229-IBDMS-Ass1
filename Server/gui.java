@@ -1,7 +1,12 @@
 package Server;
 
 import javax.swing.*;
+
+import Domain.Drone;
+import Domain.Fire;
+
 import java.awt.*;
+import java.util.LinkedList;
 
 public class GUI extends JFrame { //unsure why this throws error
     private JButton bDeleteFire;
@@ -12,7 +17,7 @@ public class GUI extends JFrame { //unsure why this throws error
     private JLabel lInformation;
     private JPanel pFunctions;
     private JPanel pInformation;
-    private JPanel pMap;
+    private DisplayDronesAndFires pMap;
     private JPanel pWestPane;
     public JTextArea tInformation;
 
@@ -37,7 +42,7 @@ public class GUI extends JFrame { //unsure why this throws error
         JScrollPane scrollPane = new JScrollPane(tInformation);
         tInformation.setEditable(false);
 
-        pMap = new JPanel();
+        pMap = new DisplayDronesAndFires(Server.getDroneList(), Server.getFireList());
 
         //set the x button to close the applications
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //change this to call the shutdown() function?
@@ -224,6 +229,13 @@ public class GUI extends JFrame { //unsure why this throws error
 
     }
 
+    public void redrawMap() {
+
+        this.pMap.repaint();
+        this.pMap.revalidate();
+
+    }
+
     //main() code for debugging/running GUI
     // public static void main(String args[]) {
     //     // try {
@@ -254,4 +266,74 @@ public class GUI extends JFrame { //unsure why this throws error
     //     //     }
     //     // });
     // }  
+
+
+    class DisplayDronesAndFires extends JPanel {
+
+        private LinkedList<Drone> droneList;
+        private LinkedList<Fire> fireList;
+
+        private double horizontalScale;
+        private double verticalScale;
+
+        public DisplayDronesAndFires(LinkedList<Drone> droneList, LinkedList<Fire> fireList) {
+
+            this.droneList = droneList;
+            this.fireList = fireList;
+
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            this.horizontalScale = 1; //getWidth() / 100;
+            this.verticalScale = 1; //getHeight() / 100;
+
+            //tint background color
+            g.setColor(Color.LIGHT_GRAY);
+            g.fillRect(0, 0, getWidth(), getHeight());
+
+            //iterate and draw drones
+            for (Drone drone : droneList) {
+
+                
+                int xPos = (int) (drone.getDroneXPos() * horizontalScale);
+                int yPos = (int) (drone.getDroneYPos() * verticalScale);
+
+                //draw drone icon
+                g.setColor(Color.blue);
+                g.fillRect(xPos, yPos, 50, 50);
+                
+                //draw drone text
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Arial", Font.PLAIN, 20));
+                g.drawString("Fire - ID: " + drone.getDroneID(), xPos, yPos + 65);   
+
+            }
+
+
+            //iterate and draw fires
+            for (Fire fire : fireList) {
+
+                
+                int xPos = (int) (fire.getfireXPos() * horizontalScale);
+                int yPos = (int) (fire.getfireYPos() * verticalScale);
+
+                //draw fire icon
+                g.setColor(Color.RED);
+                g.fillOval(xPos, yPos, 50, 50);
+                
+                //draw fire text
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Arial", Font.PLAIN, 20));
+                g.drawString("Fire - ID: " + fire.getfireID(), xPos, yPos + 65);   
+
+            }
+
+
+        }
+
+    }
+
 }
