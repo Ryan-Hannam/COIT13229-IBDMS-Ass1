@@ -24,7 +24,7 @@ public class Server {
     private static final String droneFileName = "drone.ser";
     private static final String fireFileName = "fires.csv";
     private static final int serverPort = 7896;
-ß
+
     //constructor
     Server() { }
 
@@ -37,6 +37,7 @@ public class Server {
 
         //need to populate arrays from text files
         fireList = dataStorage.readFiresFromFile(fireFileName);
+        // droneList = dataStorage.readDroneFromFile(droneFileName);
 
         //setup GUI
         guiFrame = new GUI();
@@ -52,7 +53,11 @@ public class Server {
             ServerSocket listenSocket = new ServerSocket(serverPort);
 
             while(true){
-                Socket clientSocket=listenSocket.accept();
+
+                Socket clientSocket = listenSocket.accept();
+
+                System.out.println("socket connected");
+
                 Connection connection = new Connection(clientSocket, droneList);
             }
         }

@@ -109,20 +109,27 @@ public class DataStorage {
     }
     //iterate over fire file and read data in
     public LinkedList<Fire> readFiresFromFile(String fileName) {
+
         //linkedlist to store data
         LinkedList<Fire> fireList = new LinkedList<>();
+
         try {
+
             File fireFile = new File(fileName);
+
             //when the file doesn't exist, return nothing
             if(!fireFile.exists()){
                 return null;
             }
+
             //read over the .csv line by line
             FileReader fileReader = new FileReader(fireFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
+
             //if data exists, read line by line
             while((line=bufferedReader.readLine()) !=null) {
+
             //split .csv by comma
             String data[] = line.split(",");
             int fireID = Integer.parseInt(data[0]);
@@ -130,15 +137,19 @@ public class DataStorage {
             Double fireYPos = Double.parseDouble(data[2]);
             int fireDroneID = Integer.parseInt(data[3]);
             int fireSeverity = Integer.parseInt(data[4]);
+
             //create a new fire object for each line
             Fire fire = new Fire(fireID, fireXPos, fireYPos,fireDroneID,fireSeverity);
+
             //add new fire object to the list
             fireList.add(fire);
+
             }
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        
         return fireList;
     }
     //class to append instead of overwrite files

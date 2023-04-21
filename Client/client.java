@@ -7,10 +7,11 @@ import java.net.*;
 import java.util.*;
 
 public class Client { //unsure why this throws error - should match java naem now ...
-    private LinkedList<Drone> droneList = new LinkedList<>();
     
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
+    private static LinkedList<Drone> droneList = new LinkedList<>();
+    
+    private static ObjectInputStream objectInputStream;
+    private static ObjectOutputStream objectOutputStream;
 
     private static int serverPort = 7896;
     private static String hostName = "localhost";
@@ -19,7 +20,7 @@ public class Client { //unsure why this throws error - should match java naem no
 
     public static void main (String args[]) throws InterruptedException {
 
-        Socket s = null;
+        Socket clientSocket = null;
         String message = "Drone connected";
 
         int droneID = 0;
@@ -27,40 +28,45 @@ public class Client { //unsure why this throws error - should match java naem no
         int droneXPos = 0;
         int droneYPos = 0;
 
+        //ask for drone name and store it
+        System.out.println("Please enter drone's name");
+        droneName = scanner.nextLine();
+
+        //ask for drone id and store it
+        System.out.println("Please enter drone's ID");
+        droneID = scanner.nextInt();
+
+        //create a new drone for instance of client using the provided info
+        Drone newdrone = new Drone(droneID, droneName, droneXPos, droneYPos);
+
         try {
 
-            //ask for drone name and store it
-            System.out.println("Please enter drone's name");
-            droneName = scanner.nextLine();
+            clientSocket = new Socket (hostName, serverPort);
 
-            //ask for drone id and store it
-            System.out.println("Please enter drone's ID");
-            droneID = scanner.nextInt();
+            objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 
-            System.out.println(droneName);
-            System.out.println(droneID);
-
-            //create a new drone for instance of client using the provided info
-            Drone newdrone = new Drone(droneID, droneName, droneXPos, droneYPos);
-            
-            s = new Socket (hostName, serverPort);
-
-            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
-            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
+            // System.out.println(droneName);
+            // System.out.println(droneID);
 
             //send drone to server
-            out.writeObject(newdrone);
+            // objectOutputStream.writeObject(newdrone);
+            // System.out.println("Sent drone data to server");
 
-            try {
+            // while (true) {
 
-                System.out.println(in.readObject());
-                System.out.println();
+            //     try {
 
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            //         System.out.println(objectInputStream.readObject());
+            //         System.out.println();
 
-            out.writeUTF(message);
+            //     } catch (ClassNotFoundException e) {
+            //         e.printStackTrace();
+            //     }
+
+            //     objectOutputStream.writeUTF(message);
+
+            // }
 
             // String data = in.readUTF();
             // System.out.println("Received message from: " + data);
@@ -76,9 +82,9 @@ public class Client { //unsure why this throws error - should match java naem no
             System.out.println("IO: "+e.getMessage());
         }
         finally {
-            if(s!=null)
+            if(clientSocket!=null)
             try{
-                s.close();
+                clientSocket.close();
             }
             catch (IOException e){
                 System.out.println("close: "+e.getMessage());
