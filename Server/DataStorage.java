@@ -90,7 +90,7 @@ public class DataStorage {
         try {
             //creates new file
             File fireFile = new File(fileName);
-            this.fileOutputStream = new FileOutputStream(fileName, true);
+            this.fileOutputStream = new FileOutputStream(fileName, false);
             
             for (Fire fire : fireList) {
 
