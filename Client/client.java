@@ -27,8 +27,8 @@ public class Client { //unsure why this throws error - should match java naem no
 
         int droneID = 0;
         String droneName = "";
-        int droneXPos = 0;
-        int droneYPos = 0;
+        double droneXPos = 0;
+        double droneYPos = 0;
 
         //ask for drone name and store it
         System.out.println("Please enter drone's name");
@@ -38,8 +38,22 @@ public class Client { //unsure why this throws error - should match java naem no
         System.out.println("Please enter drone's ID");
         droneID = scanner.nextInt();
 
-        //create a new drone for instance of client using the provided info
-       drone = new Drone(droneID, droneName, droneXPos, droneYPos);
+        System.out.println("Please enter drone's x coord:");
+        droneXPos = scanner.nextDouble();
+
+        System.out.println("Please enter drone's y coord:");
+        droneYPos = scanner.nextDouble();
+
+        if((droneXPos <= 400 && droneXPos >= 0) && (droneYPos <= 400 && droneYPos >= 0)){
+            //create a new drone for instance of client using the provided info
+            drone = new Drone(droneID, droneName, droneXPos, droneYPos);
+        }
+        else{
+            System.out.println("Please enter an x and y coord between 0 and 100");
+            System.exit(0);
+        }
+
+        
 
         try {
 
@@ -65,6 +79,14 @@ public class Client { //unsure why this throws error - should match java naem no
                     if (serverOption.equalsIgnoreCase("DroneReturnToBase")) {
 
                         acknowldegeRecall();
+
+                    }
+
+                    if (serverOption.equalsIgnoreCase("Shutdown")){
+
+                        System.out.println("Received Shutdown from Server");
+                        acknowldegeRecall();
+                        System.exit(0);
 
                     }
 
@@ -136,7 +158,8 @@ public class Client { //unsure why this throws error - should match java naem no
 
     private static void acknowldegeRecall(){
         System.out.println("Drone RTB");
-        System.exit(0);
+        //System.exit(0);
+        //tood: update drone X and Y to 0,0
     }
 
     public String sendDataToServer(){

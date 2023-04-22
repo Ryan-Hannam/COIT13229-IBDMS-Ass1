@@ -101,14 +101,25 @@ public class Server {
         //save drones to file
         dataStorage.writeDroneToFile(droneFileName, droneList);
 
-        System.exit(0);
-        
+        //System.out.println("All Drones RTB");
 
+        guiFrame.addMessageToConsole("Drones recalled to base");
+
+        for (Connection connection : connectedClients) {
+
+            connection.recallDroneBackToBase();
+            connection.shutdown();
+        }
+
+        guiFrame.addMessageToConsole("All drones back at base");
+        
+        guiFrame.addMessageToConsole("Shutting down ...");
+
+        System.exit(0);
     }
 
     //admin controls
     
-    //todo: delete fire
     public static void deleteFire(){
 
         //  delete fire from linked list - have commented code for testing .csv deletion?
@@ -146,7 +157,7 @@ public class Server {
     //todo: recall all
     public static void recallAll(){
         
-        System.out.println("All Drones RTB");
+        //System.out.println("All Drones RTB");
 
         guiFrame.addMessageToConsole("Drones recalled to base");
 
@@ -167,13 +178,13 @@ public class Server {
         int droneXPos = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the new x Coord."));
         int droneYPos = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the new y Coord."));
         
-        if((droneXPos <= 100 && droneXPos >= 0) && (droneYPos <= 100 && droneYPos >= 0)){
-            //Drone.setDroneXPos(droneXPos);
+        if((droneXPos <= 400 && droneXPos >= 0) && (droneYPos <= 400 && droneYPos >= 0)){
+            //Drone.setDroneXPos(droneXPos); 
             //Drone.setDroneYPos(droneYPos);
             JOptionPane.showMessageDialog(null, "Drone " + droneID + "is moved to (x,y): " + droneXPos + ", " + droneYPos);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Please enter an x and y value between 0 and 100");
+            JOptionPane.showMessageDialog(null, "Please enter an x and y value between 0 and 400");
         }
 
         //get map to redraw
@@ -192,11 +203,3 @@ public class Server {
         return Server.droneList;
     }
 }
-
-//server core
-//todo: load data from fires.csv
-//todo: load saved drone binary
-//todo: receive drone reg
-//todo: save drone details
-//todo: display position (print into GUI)
-//todo: send instructions to any drone

@@ -137,4 +137,18 @@ class Connection extends Thread {
         } 
 
     }
+
+    public void shutdown(){
+        
+        recallDroneBackToBase();
+
+        try{
+
+            out.writeObject("Shutdown");
+
+        } catch (IOException e){
+            System.err.println("IOException: " + e.getMessage());
+        }
+    }
+
 }

@@ -58,6 +58,6 @@ public class Drone implements Serializable{
 
     @Override
     public String toString(){
-        return String.format("Drone ID: %d Drone Name: %s\n x Position: %f y Position %f\n", this.droneID, this.droneName,this.droneXPos,this.droneYPos);
+        return String.format("Drone ID: %d Drone Name: %s\n x Position: %.2f y Position %.2f\n", this.droneID, this.droneName,this.droneXPos,this.droneYPos);
     }
 }
