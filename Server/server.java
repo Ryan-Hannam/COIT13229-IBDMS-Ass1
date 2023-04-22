@@ -184,7 +184,7 @@ public class Server {
             JOptionPane.showMessageDialog(null, "Drone " + droneID + "is moved to (x,y): " + droneXPos + ", " + droneYPos);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Please enter an x and y value between 0 and 400");
+            JOptionPane.showMessageDialog(null, "Please enter an x and y value between 0 and 400. Drone returning to previous location.");
         }
 
         //get map to redraw
