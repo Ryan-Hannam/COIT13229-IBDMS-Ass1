@@ -1,14 +1,14 @@
 package Server;
 
+//imports
 import javax.swing.*;
-
 import Domain.Drone;
 import Domain.Fire;
-
 import java.awt.*;
 import java.util.LinkedList;
-
+//class start
 public class GUI extends JFrame { //unsure why this throws error
+    //global variables
     private JButton bDeleteFire;
     private JButton bMoveDrone;
     private JButton bRecallAll;
@@ -21,10 +21,12 @@ public class GUI extends JFrame { //unsure why this throws error
     private JPanel pWestPane;
     public JTextArea tInformation;
 
+    //null constructor
     public GUI() {
         initComponents();
     }
-                         
+    
+    //code generated via netbeans
     public void initComponents() {
 
         //create components
@@ -202,7 +204,8 @@ public class GUI extends JFrame { //unsure why this throws error
     
         pack();
     }                      
-
+    
+    //button listeners
     private void bDeleteFireActionPerformed(java.awt.event.ActionEvent evt) {                                            
         Server.deleteFire();
     }                                           
@@ -219,121 +222,71 @@ public class GUI extends JFrame { //unsure why this throws error
         Server.shutdown();
     }                     
     
+    //print String to console in GUI
     public void addMessageToConsole(String message) {
-
         System.out.println(message);
-
         String textFieldContent = tInformation.getText();
-
         tInformation.setText(textFieldContent + "\n" + message);
-
     }
 
+    //redraws the map on call
     public void redrawMap() {
-
         this.pMap.repaint();
         this.pMap.revalidate();
-
     }
 
-    //main() code for debugging/running GUI
-    // public static void main(String args[]) {
-    //     // try {
-    //     //     for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-    //     //         if ("Nimbus".equals(info.getName())) {
-    //     //             UIManager.setLookAndFeel(info.getClassName());
-    //     //             break;
-    //     //         }
-    //     //     }
-    //     // } 
-    //     // catch (ClassNotFoundException ex) {
-    //     //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    //     // } 
-    //     // catch (InstantiationException ex) {
-    //     //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    //     // } 
-    //     // catch (IllegalAccessException ex) {
-    //     //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    //     // } 
-    //     // catch (javax.swing.UnsupportedLookAndFeelException ex) {
-    //     //     java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    //     // }
-
-    //     // create and display form
-    //     // EventQueue.invokeLater(new Runnable() {
-    //     //     public void run() {
-    //     //         new GUI().setVisible(true);
-    //     //     }
-    //     // });
-    // }  
-
-
+    //paints map in pMap
     class DisplayDronesAndFires extends JPanel {
 
+        //global variables
         private LinkedList<Drone> droneList;
         private LinkedList<Fire> fireList;
-
         private double horizontalScale;
         private double verticalScale;
 
+        //gets list of drones and fires
         public DisplayDronesAndFires(LinkedList<Drone> droneList, LinkedList<Fire> fireList) {
-
             this.droneList = droneList;
             this.fireList = fireList;
-
         }
 
+        //painted area configuration
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            this.horizontalScale = 1; //getWidth() / 100;
-            this.verticalScale = 1; //getHeight() / 100;
+            this.horizontalScale = 1;
+            this.verticalScale = 1;
 
             //tint background color
             g.setColor(Color.LIGHT_GRAY);
             g.fillRect(0, 0, getWidth(), getHeight());
 
             //iterate and draw drones
-            for (Drone drone : droneList) {
-
-                
+            for (Drone drone : droneList) {   
                 int xPos = (int) (drone.getDroneXPos() * horizontalScale);
                 int yPos = (int) (drone.getDroneYPos() * verticalScale);
-
                 //draw drone icon
                 g.setColor(Color.blue);
-                g.fillRect(xPos, yPos, 50, 50);
-                
+                g.fillRect(xPos, yPos, 50, 50);  
                 //draw drone text
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Arial", Font.PLAIN, 20));
                 g.drawString("Drone - ID: " + drone.getDroneID(), xPos, yPos + 65);   
-
             }
 
-
             //iterate and draw fires
-            for (Fire fire : fireList) {
-
-                
+            for (Fire fire : fireList) {      
                 int xPos = (int) (fire.getfireXPos() * horizontalScale);
                 int yPos = (int) (fire.getfireYPos() * verticalScale);
-
                 //draw fire icon
                 g.setColor(Color.RED);
-                g.fillOval(xPos, yPos, 50, 50);
-                
+                g.fillOval(xPos, yPos, 50, 50);           
                 //draw fire text
                 g.setColor(Color.WHITE);
                 g.setFont(new Font("Arial", Font.PLAIN, 20));
                 g.drawString("Fire - ID: " + fire.getfireID(), xPos, yPos + 65);   
-
             }
-
-
         }
-
     }
-
 }

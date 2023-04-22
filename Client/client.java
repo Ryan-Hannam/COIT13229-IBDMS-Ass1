@@ -1,13 +1,14 @@
 package Client;
 
+//imports
 import Domain.Fire;
 import Domain.Drone;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
-public class Client { //unsure why this throws error - should match java naem now ...
-    
+//class start
+public class Client {
+    //global variables
     private static LinkedList<Drone> droneList = new LinkedList<>();
     
     private static ObjectInputStream objectInputStream;
@@ -20,8 +21,9 @@ public class Client { //unsure why this throws error - should match java naem no
 
     private static Drone drone;
 
+    //main
     public static void main (String args[]) throws InterruptedException {
-
+        //method variables
         Socket clientSocket = null;
         String message = "Drone connected";
 
@@ -37,10 +39,12 @@ public class Client { //unsure why this throws error - should match java naem no
         //ask for drone id and store it
         System.out.println("Please enter drone's ID");
         droneID = scanner.nextInt();
-
+        
+        //ask for drone x coord and store it
         System.out.println("Please enter drone's x coord:");
         droneXPos = scanner.nextDouble();
 
+        //ask for drone y coord and store it
         System.out.println("Please enter drone's y coord:");
         droneYPos = scanner.nextDouble();
 
@@ -49,37 +53,39 @@ public class Client { //unsure why this throws error - should match java naem no
             drone = new Drone(droneID, droneName, droneXPos, droneYPos);
         }
         else{
+            //close program if out of bounds
             System.out.println("Please enter an x and y coord between 0 and 100");
             System.exit(0);
         }
 
-        
-
+        //attempt to connect to server
         try {
-
             clientSocket = new Socket (hostName, serverPort);
 
             objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
             objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-            
-
-            // System.out.println(droneName);
-            // System.out.println(droneID);
 
             //send drone to server
             objectOutputStream.writeObject(drone);
             System.out.println("Sent drone data to server");
 
+            //timer to update drone pos every 10000 milliseconds - called after drone registration
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask(){
+                public void run(){
+                    dronePosUpdate();
+                }
+            };
+            timer.schedule(task, 0, 10000);
+
+            //low-level listener for messages from server
             while (true) {
-
                 try {
-
+                    //check what message the server sends
                     String serverOption = (String) objectInputStream.readObject();
 
                     if (serverOption.equalsIgnoreCase("DroneReturnToBase")) {
-
                         acknowldegeRecall();
-
                     }
 
                     if (serverOption.equalsIgnoreCase("Shutdown")){
@@ -90,22 +96,11 @@ public class Client { //unsure why this throws error - should match java naem no
 
                     }
 
-                    // System.out.println(objectInputStream.readObject());
-                    // System.out.println();
-
-                    // String data = objectInputStream.readUTF();
-                    // System.out.println("Received message from: " + data);
-
-                } catch (ClassNotFoundException e) {
+                } 
+                catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-
-                // objectOutputStream.writeUTF(message);
-
             }
-
-            
-
         }
         catch (java.net.UnknownHostException e){
             System.out.println("Sock: "+e.getMessage());
@@ -116,6 +111,7 @@ public class Client { //unsure why this throws error - should match java naem no
         catch (IOException e) {
             System.out.println("IO: "+e.getMessage());
         }
+        //close socket
         finally {
             if(clientSocket!=null)
             try{
@@ -125,43 +121,29 @@ public class Client { //unsure why this throws error - should match java naem no
                 System.out.println("close: "+e.getMessage());
             }
         }
-        
-        //timer to update drone pos every 10000 milliseconds - called after drone registration
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask(){
-            public void run(){
-                dronePosUpdate();
-            }
-        };
-        timer.schedule(task, 0, 10000);
     }
-
+    //drone registration
     public String registerDrone(Drone drone){    
         String response = "";
         droneList.add(drone);
         response = sendDataToServer();
         return response;
     }
-
+    //drone pos update, called every 10 seconds, never implemented ...
     public static void dronePosUpdate(){       
-        //double droneXPos = Drone.getDroneXPos(); <-- need to somehow call this as a non-static function ...
-        //double droneYPos = Drone.getDroneYPos();
-        //send drone XPos,YPos to server
         System.out.println("Drone Position (x,y):"+"xPos"+","+"yPos"+" Sent to Server");
     }
-
+    //fire detection, never implemented ...
     public void fireDetection(int fireID, double fireXPos, double fireYPos, int fireDroneID, int fireSeverity){
         System.out.println("Fire detected, sending to server");
         Fire newFire = new Fire(fireID, fireXPos, fireYPos, fireDroneID, fireSeverity);
         String response = sendDataToServer();
     }
-
+    //acknowledge RTB, never resets dron pos to 0,0
     private static void acknowldegeRecall(){
         System.out.println("Drone RTB");
-        //System.exit(0);
-        //tood: update drone X and Y to 0,0
     }
-
+    //write object to server
     public String sendDataToServer(){
         if (droneList.size() >= 0) {
             try {
@@ -176,9 +158,5 @@ public class Client { //unsure why this throws error - should match java naem no
             }
         }
         return "Failed to Send Data to Server";
-    }
-
-    protected void finalise(){
-        sendDataToServer();
     }
 }

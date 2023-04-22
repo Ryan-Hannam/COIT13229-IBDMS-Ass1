@@ -24,6 +24,7 @@ public class DataStorage {
             boolean isFileExisting = droneFile.exists();
             int droneCounter = 0;
             this.fileOutputStream = new FileOutputStream(fileName, true);
+            //iterate through file and read each object - if file exists or create new file
             if (!isFileExisting)
                 this.objectOutputStream = new ObjectOutputStream(fileOutputStream);
             else
@@ -39,6 +40,7 @@ public class DataStorage {
         catch (Exception e) {
             System.out.println(e.getMessage());
         }  
+        //try to close file stream
         finally {
             try {
                 fileOutputStream.close();
@@ -69,6 +71,7 @@ public class DataStorage {
         catch (Exception e) {
             System.out.println(e.getMessage());
         } 
+        //try to close stream
         finally {
             try {
                 if (fileInputStream != null) {
@@ -86,27 +89,22 @@ public class DataStorage {
     }
     //writes fires to a file
     public boolean writeFiresToFile(String fileName, LinkedList<Fire> fireList){
-
         try {
             //creates new file
             File fireFile = new File(fileName);
-            this.fileOutputStream = new FileOutputStream(fileName, false);
-            
+            this.fileOutputStream = new FileOutputStream(fileName, false);     
             for (Fire fire : fireList) {
-
                 //formats data as .csv
                 fileOutputStream.write((fire.getfireID() + "," + fire.getfireXPos() + "," + fire.getfireYPos() + "," + fire.getFireDroneID() + "," + fire.getFireSeverity() + "\n").getBytes());
-
             }
-
             objectOutputStream.flush();
             objectOutputStream.close();
-
             return true;
         } 
         catch (Exception e) {
             System.out.println(e.getMessage());
-        }  
+        } 
+        //try to close file stream 
         finally {
             try {
                 fileOutputStream.close();
@@ -119,27 +117,20 @@ public class DataStorage {
     }
     //iterate over fire file and read data in
     public LinkedList<Fire> readFiresFromFile(String fileName) {
-
         //linkedlist to store data
         LinkedList<Fire> fireList = new LinkedList<>();
-
         try {
-
             File fireFile = new File(fileName);
-
-            //when the file doesn't exist, return nothing
+             //when the file doesn't exist, return nothing
             if(!fireFile.exists()){
                 return null;
             }
-
             //read over the .csv line by line
             FileReader fileReader = new FileReader(fireFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
-
             //if data exists, read line by line
             while((line=bufferedReader.readLine()) !=null) {
-
             //split .csv by comma
             String data[] = line.split(",");
             int fireID = Integer.parseInt(data[0]);
@@ -147,33 +138,26 @@ public class DataStorage {
             Double fireYPos = Double.parseDouble(data[2]);
             int fireDroneID = Integer.parseInt(data[3]);
             int fireSeverity = Integer.parseInt(data[4]);
-
             //create a new fire object for each line
             Fire fire = new Fire(fireID, fireXPos, fireYPos,fireDroneID,fireSeverity);
-
             //add new fire object to the list
             fireList.add(fire);
-
             }
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        
+        }       
         return fireList;
     }
     //class to append instead of overwrite files
     class AppendingObjectOutputStream extends ObjectOutputStream {
-
         public AppendingObjectOutputStream(OutputStream out) throws IOException {
             super(out);
             this.writeStreamHeader();
         }
-
         @Override
         protected void writeStreamHeader() throws IOException {
             return;
         }
     }
-
 }
